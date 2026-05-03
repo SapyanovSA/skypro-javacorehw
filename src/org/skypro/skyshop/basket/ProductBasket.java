@@ -18,12 +18,12 @@ public class ProductBasket {
     //Метод добавления продукта в корзину
     public void addProduct(Product product) {
         if (size >= products.length) {
-            System.out.println("Невозможно добавить продукт: " + product.getNameProduct() + ". Корзина полная.");
+            System.out.println("Невозможно добавить продукт: " + product.getName() + ". Корзина полная.");
             return;
         }
         products[size] = product;
         size++;
-        System.out.println(product.getNameProduct() + " добавлен в корзину.");
+        System.out.println(product.getName() + " добавлен в корзину.");
     }
 
     //Метод получения общей стоимости продукции
@@ -31,7 +31,7 @@ public class ProductBasket {
         int sum = 0;
         for (int index = 0; index < size; index++) {
             if (products[index] != null) {
-                sum += products[index].getAmountProduct();
+                sum += products[index].getPrice();
             }
         }
         return sum;
@@ -39,22 +39,29 @@ public class ProductBasket {
 
     //Метод печатающий содержимое корзины
     public void printProductsAndAllCost() {
+        int productIsSpecial = 0;
         if (size == 0) {
             System.out.println("В корзине пусто.");
             return;
         }
         for (int index = 0; index < size; index++) {
+
             if (products[index] != null) {
-                System.out.println(products[index].getNameProduct() + ": " + products[index].getAmountProduct());
+                System.out.println(products[index]);
+            }
+
+            if (products[index].isSpecial() == true) {
+                productIsSpecial++;
             }
         }
         System.out.println("Итого: " + refundProductsCost());
+        System.out.println("Специальный товар: " + productIsSpecial);
     }
 
     //Метод проверяющий продукт в корзине по имени
-    public boolean findProduct(String nameProduct) {
+    public boolean findProduct(String name) {
         for (int index = 0; index < size; index++) {
-            if (products[index] != null && products[index].getNameProduct().equals(nameProduct)) {
+            if (products[index] != null && products[index].getName().equals(name)) {
                 return true;
             }
         }
