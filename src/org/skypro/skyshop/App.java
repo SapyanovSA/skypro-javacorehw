@@ -1,10 +1,13 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.content.Article;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
+import org.skypro.skyshop.search.SearchEngine;
+import org.skypro.skyshop.search.Searchable;
 
 public class App {
 
@@ -65,6 +68,7 @@ public class App {
         productBasket2.addProduct(fixPriceProduct1);
         productBasket2.addProduct(discountedProduct2);
         productBasket2.addProduct(simpleProduct2);
+
         System.out.println("Задание 2");
         //Проверка работы всех методов
         System.out.println("Метод 1");
@@ -79,6 +83,49 @@ public class App {
         System.out.println("Метод 4");
         productBasket2.clearBasket();
         System.out.println();
+
+        System.out.println("Урок 3. ООП. Полиморфизм");
+        System.out.println("Задание 1 Вывод");
+        //Создать объект SearchEngine и добавить в него все товары
+        SearchEngine searchEngine1 = new SearchEngine(10);
+        searchEngine1.add(product1);
+        searchEngine1.add(product2);
+        searchEngine1.add(product3);
+        searchEngine1.add(product4);
+        searchEngine1.add(product5);
+        searchEngine1.add(product6);
+        System.out.println("Задание 2 Вывод");
+        //Создать несколько объектов Article и тоже их добавить
+        Searchable article1 = new Article("Lemon", "PRODUCT");
+        Searchable article2 = new Article("Apple", "PRODUCT");
+        Searchable article3 = new Article("Apple juice", "PRODUCT");
+        Searchable article4 = new Article("Lemon juice", "PRODUCT");
+        searchEngine1.add(article1);
+        searchEngine1.add(article2);
+        searchEngine1.add(article3);
+        searchEngine1.add(article4);
+        System.out.println("Задание 3 Вывод");
+        //Демонстрация функционала поиска
+        Searchable[] results = searchEngine1.search("juice");
+        for (Searchable result : results) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+            }
+        }
+
+        Searchable[] results2 = searchEngine1.search("Apple");
+        for (Searchable result : results2) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+            }
+        }
+
+        Searchable[] results3 = searchEngine1.search("Banana");
+        for (Searchable result : results3) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+            }
+        }
     }
 
 }
