@@ -2,6 +2,7 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.content.Article;
+import org.skypro.skyshop.exeption.BestResultNotFound;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
@@ -125,6 +126,55 @@ public class App {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
+        }
+
+        System.out.println("Урок 4. Исключения.");
+        System.out.println("Задание 1 Вывод");
+        //Создать несколько продуктов с неправильно заполнеными полями
+        //Создать блок try catch
+
+        try {
+            SimpleProduct newSimpleProduct1 = new SimpleProduct("SimpleProduct1", 100);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            SimpleProduct newSimpleProduct2 = new SimpleProduct("SimpleProduct2", 100);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            SimpleProduct newSimpleProduct3 = new SimpleProduct("SimpleProduct3", 1);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            SimpleProduct newSimpleProduct4 = new SimpleProduct("SimpleProduct4", 20);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        try {
+            DiscountedProduct newDiscountedProduct = new DiscountedProduct("product1", 20, 50);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка: " + e.getMessage());
+        }
+
+        System.out.println("Задание 5 Вывод");
+        // Продемонстрировать новый метод поиска
+        try {
+            System.out.println(searchEngine1.searchSuitable("Apple"));
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
+        }
+
+        try {
+            System.out.println(searchEngine1.searchSuitable("Book"));
+        } catch (BestResultNotFound e) {
+            System.err.println(e.getMessage());
         }
     }
 
