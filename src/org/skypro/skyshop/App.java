@@ -10,6 +10,9 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
+import java.util.IllegalFormatCodePointException;
+import java.util.List;
+
 public class App {
 
     public static void main(String[] args) {
@@ -31,9 +34,9 @@ public class App {
         productBasket.addProduct(product5);
         System.out.println();
         //Задание 2 Добавить продукты в заполненую корзину
-        System.out.println("Задание 2");
-        productBasket.addProduct(product6);
-        System.out.println();
+//        System.out.println("Задание 2");
+//        productBasket.addProduct(product6);
+//        System.out.println();
         //Задание 3 и 4 распечатать корзину и ее стоимость со всеми товарами
         System.out.println("Задание 3 и 4");
         productBasket.printProductsAndAllCost();
@@ -88,7 +91,7 @@ public class App {
         System.out.println("Урок 3. ООП. Полиморфизм");
         System.out.println("Задание 1 Вывод");
         //Создать объект SearchEngine и добавить в него все товары
-        SearchEngine searchEngine1 = new SearchEngine(10);
+        SearchEngine searchEngine1 = new SearchEngine();
         searchEngine1.add(product1);
         searchEngine1.add(product2);
         searchEngine1.add(product3);
@@ -107,21 +110,21 @@ public class App {
         searchEngine1.add(article4);
         System.out.println("Задание 3 Вывод");
         //Демонстрация функционала поиска
-        Searchable[] results = searchEngine1.search("juice");
+        List<Searchable> results = searchEngine1.search("juice");
         for (Searchable result : results) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        Searchable[] results2 = searchEngine1.search("Apple");
+        List<Searchable> results2 = searchEngine1.search("Apple");
         for (Searchable result : results2) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        Searchable[] results3 = searchEngine1.search("Banana");
+        List<Searchable> results3 = searchEngine1.search("Banana");
         for (Searchable result : results3) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
@@ -176,6 +179,37 @@ public class App {
         } catch (BestResultNotFound e) {
             System.err.println(e.getMessage());
         }
+
+        System.out.println();
+
+        System.out.println("Урок 5. Java collections.");
+        // Демонстрация метода remove
+        productBasket.addProduct(new SimpleProduct("Bread", 100));
+        productBasket.addProduct(new SimpleProduct("Apple", 50));
+        productBasket.addProduct(new SimpleProduct("Banana", 60));
+        productBasket.addProduct(new SimpleProduct("Bread", 100));
+        productBasket.addProduct(new SimpleProduct("Meet", 400));
+        System.out.println();
+        //Удалить существубщий продукт(ы)
+        System.out.println(productBasket.removeProduct("Bread"));
+        System.out.println();
+        //Вызов корзины
+        productBasket.printProductsAndAllCost();
+        System.out.println();
+        // Удалить несуществующий продукт Вывести пустой список с надписью СПИСОК ПУСТ
+        List<Product> removed = productBasket.removeProduct("Book");
+
+        if (removed.isEmpty()) {
+            System.out.println("Список пуст.");
+        } else {
+            System.out.println("Удаленные продукты: " + removed);
+        }
+
+        System.out.println();
+        productBasket.printProductsAndAllCost();
+        System.out.println();
+
+
     }
 
 }

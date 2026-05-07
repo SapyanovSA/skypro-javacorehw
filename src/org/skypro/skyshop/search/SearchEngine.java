@@ -1,29 +1,26 @@
 package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exeption.BestResultNotFound;
+import org.skypro.skyshop.product.Product;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SearchEngine {
 
-    Searchable[] searchables;
-    int counter;
+    private List<Searchable> searchables;
 
-    public SearchEngine(int size) {
-        searchables = new Searchable[size];
-        counter = 0;
+    public SearchEngine() {
+        this.searchables = new ArrayList<>();
     }
 
-    public Searchable[] search(String query) {
-        Searchable[] results = new Searchable[5];
+    public List<Searchable> search(String query) {
+        List<Searchable> results = new ArrayList<>();
         int sizeCounter = 0;
 
-        for (int index = 0; index < searchables.length; index++) {
-            if (searchables[index] != null && searchables[index].getSearchTerm().contains(query)) {
-                results[sizeCounter] = searchables[index];
-                sizeCounter++;
-            }
-
-            if (sizeCounter == 5) {
-                break;
+        for (Searchable current : searchables) {
+            if (current.getSearchTerm().contains(query)) {
+                results.add(current);
             }
         }
         return results;
@@ -69,10 +66,6 @@ public class SearchEngine {
     }
 
     public void add(Searchable object) {
-        if (counter < searchables.length) {
-            searchables[counter] = object;
-            System.out.println(searchables[counter].getName() + " добавлен");
-            counter++;
-        }
+        searchables.add(object);
     }
 }
