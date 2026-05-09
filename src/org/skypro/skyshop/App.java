@@ -12,6 +12,7 @@ import org.skypro.skyshop.search.Searchable;
 
 import java.util.IllegalFormatCodePointException;
 import java.util.List;
+import java.util.Map;
 
 public class App {
 
@@ -110,22 +111,22 @@ public class App {
         searchEngine1.add(article4);
         System.out.println("Задание 3 Вывод");
         //Демонстрация функционала поиска
-        List<Searchable> results = searchEngine1.search("juice");
-        for (Searchable result : results) {
+        Map<String, Searchable> results = searchEngine1.search("juice");
+        for (Searchable result : results.values()) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        List<Searchable> results2 = searchEngine1.search("Apple");
-        for (Searchable result : results2) {
+        Map<String, Searchable> results2 = searchEngine1.search("Apple");
+        for (Searchable result : results2.values()) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        List<Searchable> results3 = searchEngine1.search("Banana");
-        for (Searchable result : results3) {
+        Map<String, Searchable> results3 = searchEngine1.search("Banana");
+        for (Searchable result : results3.values()) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
