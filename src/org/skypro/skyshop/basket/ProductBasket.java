@@ -13,15 +13,9 @@ public class ProductBasket {
 
     //Метод добавления продукта в корзину
     public void addProduct(Product product) {
-        String name = product.getName();
+        products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
 
-        if (!(products.containsKey(name))) {
-            products.put(name, new ArrayList<>());
-        }
-
-        products.get(name).add(product);
-
-        System.out.println(name + " добавлен в корзину.");
+        System.out.println(product.getName() + " добавлен в корзину.");
     }
 
     //Метод получения общей стоимости продукции
