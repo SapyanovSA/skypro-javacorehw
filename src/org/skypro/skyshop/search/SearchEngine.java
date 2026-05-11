@@ -2,6 +2,7 @@ package org.skypro.skyshop.search;
 
 import org.skypro.skyshop.exeption.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
+import org.skypro.skyshop.comparator.SearchNameComparator;
 
 import java.util.*;
 
@@ -14,13 +15,7 @@ public class SearchEngine{
     }
 
     public Set<Searchable> search(String query) {
-        Set<Searchable> setSearch = new TreeSet<>((pr1, pr2) -> {
-            int results = Integer.compare(pr2.getName().length(), pr1.getName().length());
-            if (results != 0) {
-                return results;
-            }
-            return pr1.getName().compareTo(pr2.getName());
-        });
+        Set<Searchable> setSearch = new TreeSet<>(new SearchNameComparator());
 
         for (Searchable current : searchables) {
             if (current.getSearchTerm().contains(query)) {
