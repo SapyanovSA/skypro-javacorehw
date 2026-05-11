@@ -5,6 +5,8 @@ import org.skypro.skyshop.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class SearchEngine {
 
@@ -14,13 +16,12 @@ public class SearchEngine {
         this.searchables = new ArrayList<>();
     }
 
-    public List<Searchable> search(String query) {
-        List<Searchable> results = new ArrayList<>();
-        int sizeCounter = 0;
+    public Map<String, Searchable> search(String query) {
+        Map<String, Searchable> results = new TreeMap<>();
 
         for (Searchable current : searchables) {
             if (current.getSearchTerm().contains(query)) {
-                results.add(current);
+                results.put(current.getName(), current);
             }
         }
         return results;

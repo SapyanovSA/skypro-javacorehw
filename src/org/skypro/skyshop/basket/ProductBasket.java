@@ -5,26 +5,27 @@ import org.skypro.skyshop.product.Product;
 import java.util.*;
 
 public class ProductBasket {
-    private List<Product> products;
+    private Map<String, List<Product>> products ;
 
     public ProductBasket() {
-        this.products = new LinkedList<>();
+        this.products = new HashMap<>();
     }
 
     //Метод добавления продукта в корзину
     public void addProduct(Product product) {
-        products.add(product);
+        products.computeIfAbsent(product.getName(), k -> new ArrayList<>()).add(product);
+
         System.out.println(product.getName() + " добавлен в корзину.");
     }
 
     //Метод получения общей стоимости продукции
     public int refundProductsCost() {
         int sum = 0;
-        for (Product pr : products) {
-            if (pr == null) {
-                continue;
+
+        for (List<Product> pr : products.values()) {
+            for (Product current : pr) {
+                sum += current.getPrice();
             }
-            sum += pr.getPrice();
         }
         return sum;
     }
@@ -33,16 +34,18 @@ public class ProductBasket {
     public void printProductsAndAllCost() {
         int productIsSpecial = 0;
 
-        if (products.size() == 0) {
+        if (products.isEmpty()) {
             System.out.println("Карзина пустая");
             return;
         }
 
-        for (Product pr : products) {
-            System.out.println(pr);
+        for (List<Product> current : products.values()) {
+            for (Product pr : current) {
+                System.out.println(pr);
 
-            if (pr.isSpecial()) {
-                productIsSpecial++;
+                if (pr.isSpecial()) {
+                    productIsSpecial++;
+                }
             }
         }
 
@@ -53,30 +56,17 @@ public class ProductBasket {
     //Метод проверяющий продукт в корзине по имени
     public boolean findProduct(String name) {
 
-        for (Product pr : products) {
-            if (pr.getName().equals(name)) {
-                return true;
-            }
-        }
-
-        return false;
+        return products.containsKey(name);
     }
 
     public List<Product> removeProduct(String name) {
-        List<Product> deletedProduct = new ArrayList<>();
-        Iterator<Product> iterator = products.iterator();
+        List<Product> removed = products.remove(name);
 
-        while (iterator.hasNext()) {
-
-            Product currentProduct = iterator.next();
-
-            if (currentProduct.getName().equals(name)) {
-                deletedProduct.add(currentProduct);
-                iterator.remove();
-            }
+        if (removed != null) {
+            return removed;
+        } else {
+            return new ArrayList<>();
         }
-
-        return deletedProduct;
     }
 
     //Метод очистки корзины
