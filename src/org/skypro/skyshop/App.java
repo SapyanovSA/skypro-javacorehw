@@ -10,9 +10,7 @@ import org.skypro.skyshop.product.SimpleProduct;
 import org.skypro.skyshop.search.SearchEngine;
 import org.skypro.skyshop.search.Searchable;
 
-import java.util.IllegalFormatCodePointException;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class App {
 
@@ -111,22 +109,22 @@ public class App {
         searchEngine1.add(article4);
         System.out.println("Задание 3 Вывод");
         //Демонстрация функционала поиска
-        Map<String, Searchable> results = searchEngine1.search("juice");
-        for (Searchable result : results.values()) {
+        Set<Searchable> results = searchEngine1.search("juice");
+        for (Searchable result : results) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        Map<String, Searchable> results2 = searchEngine1.search("Apple");
-        for (Searchable result : results2.values()) {
+        Set<Searchable> results2 = searchEngine1.search("Apple");
+        for (Searchable result : results2) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
         }
 
-        Map<String, Searchable> results3 = searchEngine1.search("Banana");
-        for (Searchable result : results3.values()) {
+        Set<Searchable> results3 = searchEngine1.search("Banana");
+        for (Searchable result : results3) {
             if (result != null) {
                 System.out.println(result.getStringRepresentation());
             }
@@ -210,6 +208,26 @@ public class App {
         productBasket.printProductsAndAllCost();
         System.out.println();
 
+        System.out.println("Урок 8. Java collections. Set");
+        //Проверка отсортировынных списков через Comparable and Comparator
+        SearchEngine searchEngine2 = new SearchEngine();
+        Product product21 = new SimpleProduct("Хлеб", 100);
+        Product product22 = new SimpleProduct("Хлеб", 100);
+        Product product23 = new SimpleProduct("Мясо", 100);
+        Product product24 = new SimpleProduct("Сыр", 100);
+        Product product25 = new SimpleProduct("Молоко", 100);
+
+        searchEngine2.add(product21);
+        searchEngine2.add(product22);
+        searchEngine2.add(product23);
+        searchEngine2.add(product24);
+        searchEngine2.add(product25);
+
+        for (Searchable s : searchEngine2.search("")) {
+            System.out.println(s.getStringRepresentation());
+        }
+
+        System.out.println();
 
     }
 

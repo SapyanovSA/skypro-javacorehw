@@ -3,28 +3,31 @@ package org.skypro.skyshop.search;
 import org.skypro.skyshop.exeption.BestResultNotFound;
 import org.skypro.skyshop.product.Product;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class SearchEngine {
+public class SearchEngine{
 
-    private List<Searchable> searchables;
+    private Set<Searchable> searchables;
 
     public SearchEngine() {
-        this.searchables = new ArrayList<>();
+        this.searchables = new HashSet<>();
     }
 
-    public Map<String, Searchable> search(String query) {
-        Map<String, Searchable> results = new TreeMap<>();
+    public Set<Searchable> search(String query) {
+        Set<Searchable> setSearch = new TreeSet<>((pr1, pr2) -> {
+            int results = Integer.compare(pr2.getName().length(), pr1.getName().length());
+            if (results != 0) {
+                return results;
+            }
+            return pr1.getName().compareTo(pr2.getName());
+        });
 
         for (Searchable current : searchables) {
             if (current.getSearchTerm().contains(query)) {
-                results.put(current.getName(), current);
+                setSearch.add(current);
             }
         }
-        return results;
+        return setSearch;
     }
 
     public Searchable searchSuitable(String query) throws BestResultNotFound {
@@ -37,9 +40,6 @@ public class SearchEngine {
         }
 
         for (Searchable current: searchables) {
-            if (current == null) {
-                continue;
-            }
 
             String searchTerm = current.getSearchTerm();
             int currentCount = 0;
@@ -69,4 +69,5 @@ public class SearchEngine {
     public void add(Searchable object) {
         searchables.add(object);
     }
+
 }
