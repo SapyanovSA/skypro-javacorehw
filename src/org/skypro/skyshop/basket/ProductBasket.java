@@ -2,10 +2,11 @@ package org.skypro.skyshop.basket;
 
 import org.skypro.skyshop.product.Product;
 
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class ProductBasket {
-    private Map<String, List<Product>> products ;
+    private Map<String, List<Product>> products;
 
     public ProductBasket() {
         this.products = new HashMap<>();
@@ -20,37 +21,28 @@ public class ProductBasket {
 
     //Метод получения общей стоимости продукции
     public int refundProductsCost() {
-        int sum = 0;
-
-        for (List<Product> pr : products.values()) {
-            for (Product current : pr) {
-                sum += current.getPrice();
-            }
-        }
-        return sum;
+        return products.values().stream()
+                .flatMap(Collection::stream)
+                .mapToInt(Product::getPrice)
+                .sum();
     }
 
     //Метод печатающий содержимое корзины
     public void printProductsAndAllCost() {
-        int productIsSpecial = 0;
+        products.values().stream()
+                .flatMap(Collection::stream)
+                .forEach(product -> System.out.println(product.getStringRepresentation()));
 
-        if (products.isEmpty()) {
-            System.out.println("Карзина пустая");
-            return;
-        }
-
-        for (List<Product> current : products.values()) {
-            for (Product pr : current) {
-                System.out.println(pr);
-
-                if (pr.isSpecial()) {
-                    productIsSpecial++;
-                }
-            }
-        }
 
         System.out.println("Итого: " + refundProductsCost());
-        System.out.println("Специальный товар: " + productIsSpecial);
+        System.out.println("Специальный товар: " + getSpecialCount());
+    }
+
+    private int getSpecialCount() {
+        return (int) products.values().stream()
+                .flatMap(Collection::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     //Метод проверяющий продукт в корзине по имени
