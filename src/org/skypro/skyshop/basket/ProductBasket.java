@@ -38,8 +38,8 @@ public class ProductBasket {
         System.out.println("Специальный товар: " + getSpecialCount());
     }
 
-    private int getSpecialCount() {
-        return (int) products.values().stream()
+    private long getSpecialCount() {
+        return products.values().stream()
                 .flatMap(Collection::stream)
                 .filter(Product::isSpecial)
                 .count();
